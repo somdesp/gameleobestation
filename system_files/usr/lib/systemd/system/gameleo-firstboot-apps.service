@@ -1,0 +1,15 @@
+[Unit]
+Description=GameLeoBeStation - instala launchers de jogos no primeiro boot
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=!/var/lib/gameleobestation/apps-instalados
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/mkdir -p /var/lib/gameleobestation
+ExecStart=/usr/libexec/gameleo-firstboot-apps.sh
+Restart=on-failure
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target

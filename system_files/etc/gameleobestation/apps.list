@@ -1,0 +1,14 @@
+# Apps (Flatpak) instalados automaticamente no primeiro boot.
+# Um ID por linha. Linhas com # sao ignoradas.
+
+# Epic Games, GOG e Amazon Games
+com.heroicgameslauncher.hgl
+# Battle.net, EA App, Ubisoft, itch.io e instaladores avulsos
+net.lutris.Lutris
+# Importa automaticamente os jogos da Epic, GOG, Amazon, itch etc. para dentro do Steam
+io.github.philipk.boilr
+# Gerencia versoes do Proton (Proton-GE etc.)
+com.vysp3r.ProtonPlus
+
+# Emuladores de consoles antigos (tire o # para ativar)
+# net.retrodeck.retrodeck

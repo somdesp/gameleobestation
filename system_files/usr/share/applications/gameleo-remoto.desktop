@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Acesso Remoto
+Comment=Ativar e gerenciar o acesso remoto do GameLeoBeStation
+Exec=gameleo-remoto
+Icon=preferences-system-network-remote
+Terminal=true
+Categories=System;Network;

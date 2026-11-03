@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=GameLeoBeStation
+Description=Tela de carregamento do GameLeoBeStation
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/gameleobestation
+ScriptFile=/usr/share/plymouth/themes/gameleobestation/gameleobestation.script

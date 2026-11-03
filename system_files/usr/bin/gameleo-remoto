@@ -1,0 +1,104 @@
+#!/usr/bin/bash
+# GameLeoBeStation - Central de acesso remoto
+# Usa as ferramentas que ja vem no Bazzite (Sunshine, Tailscale, SSH) + RustDesk opcional.
+
+B=$'\e[1m'; C=$'\e[36m'; G=$'\e[32m'; Y=$'\e[33m'; N=$'\e[0m'
+
+ip_local() { hostname -I 2>/dev/null | awk '{print $1}'; }
+
+status() {
+  echo
+  echo "${B}Status do acesso remoto${N}"
+  echo "  IP na rede de casa: ${C}$(ip_local)${N}"
+  if systemctl --user is-active --quiet app-dev.lizardbyte.app.Sunshine 2>/dev/null; then
+    echo "  Sunshine (jogar remoto):  ${G}ativo${N}"
+  else
+    echo "  Sunshine (jogar remoto):  ${Y}desligado${N}"
+  fi
+  if systemctl is-active --quiet tailscaled 2>/dev/null; then
+    TS_IP=$(tailscale ip -4 2>/dev/null | head -n1)
+    echo "  Tailscale (fora de casa): ${G}ativo${N} ${TS_IP:+(IP: $TS_IP)}"
+  else
+    echo "  Tailscale (fora de casa): ${Y}desligado${N}"
+  fi
+  if systemctl is-active --quiet sshd 2>/dev/null; then
+    echo "  SSH (terminal remoto):    ${G}ativo${N}  -> ssh $(whoami)@$(ip_local)"
+  else
+    echo "  SSH (terminal remoto):    ${Y}desligado${N}"
+  fi
+  if flatpak info com.rustdesk.RustDesk >/dev/null 2>&1; then
+    echo "  RustDesk (area de trab.): ${G}instalado${N}"
+  else
+    echo "  RustDesk (area de trab.): ${Y}nao instalado${N}"
+  fi
+  echo
+}
+
+sunshine() {
+  echo "${B}Ativando Sunshine...${N}"
+  ujust setup-sunshine enable-flatpak || { echo "Falhou. Tente: ujust setup-sunshine"; return; }
+  echo
+  echo "${G}Pronto!${N} Agora:"
+  echo "  1. Abra no navegador DESTE PC: ${C}https://localhost:47990${N}"
+  echo "     (aceite o aviso de certificado e crie um usuario e senha)"
+  echo "  2. No celular, notebook ou TV, instale o app ${B}Moonlight${N}."
+  echo "  3. No Moonlight, escolha este PC (ou adicione o IP ${C}$(ip_local)${N})."
+  echo "  4. Digite o PIN que aparecer na pagina do Sunshine, aba PIN."
+}
+
+tailscale_on() {
+  echo "${B}Ativando Tailscale...${N}"
+  ujust tailscale enable || return
+  echo
+  echo "Vai aparecer um link. Abra ele e entre com sua conta (Google, Microsoft etc.)."
+  sudo tailscale up
+  echo
+  echo "${G}Pronto!${N} Instale o Tailscale no celular/notebook com a mesma conta."
+  echo "Fora de casa, use o IP do Tailscale (${C}$(tailscale ip -4 2>/dev/null | head -n1)${N}) no Moonlight ou no SSH."
+}
+
+ssh_on() {
+  ujust ssh enable && echo "${G}SSH ativo.${N} De outro PC: ${C}ssh $(whoami)@$(ip_local)${N}"
+}
+
+rustdesk() {
+  echo "${B}Instalando RustDesk...${N}"
+  flatpak install --system -y flathub com.rustdesk.RustDesk || return
+  echo "${G}Instalado.${N} Abra o RustDesk no Modo Desktop; ele mostra um ID e senha"
+  echo "para voce acessar de qualquer lugar (parecido com o AnyDesk)."
+}
+
+desligar() {
+  systemctl --user disable --now app-dev.lizardbyte.app.Sunshine 2>/dev/null
+  ujust tailscale disable 2>/dev/null
+  ujust ssh disable 2>/dev/null
+  echo "${G}Acesso remoto desligado.${N} (O RustDesk, se instalado, so funciona quando aberto.)"
+}
+
+case "${1:-}" in
+  status) status; exit 0;;
+  sunshine) sunshine; exit 0;;
+  tailscale) tailscale_on; exit 0;;
+  ssh) ssh_on; exit 0;;
+  rustdesk) rustdesk; exit 0;;
+  desligar) desligar; exit 0;;
+esac
+
+while true; do
+  clear
+  echo "${C}${B}  GameLeoBeStation - Acesso Remoto${N}"
+  status
+  echo "  ${B}1${N}) Jogar de outro aparelho (Sunshine + Moonlight)"
+  echo "  ${B}2${N}) Acessar de fora de casa (Tailscale)"
+  echo "  ${B}3${N}) Terminal remoto (SSH)"
+  echo "  ${B}4${N}) Controlar a area de trabalho (RustDesk)"
+  echo "  ${B}5${N}) Desligar todo o acesso remoto"
+  echo "  ${B}0${N}) Sair"
+  echo
+  read -rp "Escolha: " op
+  case "$op" in
+    1) sunshine;; 2) tailscale_on;; 3) ssh_on;; 4) rustdesk;; 5) desligar;;
+    0|"") exit 0;;
+  esac
+  echo; read -rp "Enter para voltar ao menu..." _
+done
