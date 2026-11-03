@@ -37,7 +37,7 @@ Para trocar o logo, substitua os PNGs e o .webm por versoes suas com o mesmo nom
 
 1. Crie uma conta no GitHub (se nao tiver).
 2. Crie um repositorio novo chamado exatamente `gameleobestation` e envie todos estes arquivos para ele (pode arrastar a pasta em "Add file > Upload files"; a pasta `.github` precisa ir junto).
-3. Troque `seu-usuario` pelo seu usuario do GitHub (minusculas) em dois arquivos: `image-template.env` e `disk_config/iso.toml`.
+3. Troque `somdesp` pelo seu usuario do GitHub (minusculas) em dois arquivos: `image-template.env` e `disk_config/iso.toml`.
 4. Va na aba **Actions** e clique para ativar os workflows.
 5. Rode **Build container image** (Actions > Build container image > Run workflow). Leva uns 20 a 40 minutos.
 6. Deixe a imagem publica: no seu perfil do GitHub, aba **Packages** > `gameleobestation` > Package settings > Change visibility > Public. Sem isso a instalacao e as atualizacoes falham.

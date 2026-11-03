@@ -1,9 +1,9 @@
 # Configuracao do instalador (ISO).
-# TROQUE "seu-usuario" pelo seu usuario do GitHub, em minusculas.
+# TROQUE "somdesp" pelo seu usuario do GitHub, em minusculas.
 [customizations.installer.kickstart]
 contents = """
 %post
-bootc switch --mutate-in-place --transport registry ghcr.io/seu-usuario/gameleobestation:latest
+bootc switch --mutate-in-place --transport registry ghcr.io/somdesp/gameleobestation:latest
 %end
 """
 
