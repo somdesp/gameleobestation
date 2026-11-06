@@ -1,3 +1,0 @@
-# Sistema de arquivos padrao da instalacao (o mesmo que o Bazzite usa)
-[install.filesystem.root]
-type = "btrfs"

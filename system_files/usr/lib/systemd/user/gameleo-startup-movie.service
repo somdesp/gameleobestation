@@ -1,9 +1,0 @@
-[Unit]
-Description=GameLeoBeStation - video de abertura do Steam
-
-[Service]
-Type=oneshot
-ExecStart=/usr/libexec/gameleo-startup-movie.sh
-
-[Install]
-WantedBy=default.target
