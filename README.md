@@ -39,6 +39,7 @@ O pacote `gameleobestation` precisa estar **publico** no GitHub (Packages > Pack
 
 - Sair do modo console para a area de trabalho: feche o Heronite. Para voltar, abra
   "Modo Console (Heronite)" no menu.
+- A tela nao bloqueia sozinha nem pede senha ao voltar da suspensao.
 - Desligar o login automatico: `sudo touch /etc/gameleobestation/no-autologin`
 - Apps extras no primeiro boot: edite `system_files/etc/gameleobestation/apps.list`.
 - Steam em portugues: Steam > Configuracoes > Interface > Idioma.
