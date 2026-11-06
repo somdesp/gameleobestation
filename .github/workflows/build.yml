@@ -73,7 +73,18 @@ jobs:
           just build \
             ${IMAGE_NAME} \
             ${DEFAULT_TAG}
-            
+
+      # This is optional, this provides smaller delta updates
+      # Rechunk desativado: a imagem do Bazzite e grande demais para o disco
+      # do runner gratuito do GitHub ("no space left on device").
+      # O rechunk so deixa as atualizacoes menores; a imagem funciona igual sem ele.
+      # - name: Rechunk with rpm-ostree
+      #   id: rechunk
+      #   run: |
+      #     just ostree-rechunk \
+      #       ${IMAGE_NAME} \
+      #       ${DEFAULT_TAG}
+
       # If you are feeling adventurous, use the new distro agnostic rechunker
       # https://github.com/coreos/chunkah
       # You can delete the Rechunk with rpm-ostree portion then if you use this
@@ -128,5 +139,6 @@ jobs:
 
           digest=$(< /tmp/digestfile)
 
-          echo "digest=${digest}" >> $GITHUB_OUTPUT   
+          echo "digest=${digest}" >> $GITHUB_OUTPUT
 
+      # Assinatura (cosign) removida: nao e necessaria para instalar ou atualizar.

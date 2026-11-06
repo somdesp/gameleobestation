@@ -1,66 +1,59 @@
-# GameLeoBeStation - tela de carregamento (Plymouth)
+# GameLeoBeStation - tela de carregamento animada (Plymouth)
 
-Window.SetBackgroundTopColor(0.031, 0.031, 0.059);
-Window.SetBackgroundBottomColor(0.031, 0.031, 0.059);
+Window.SetBackgroundTopColor(0, 0, 0);
+Window.SetBackgroundBottomColor(0, 0, 0);
 
 cx = Window.GetX() + Window.GetWidth() / 2;
 cy = Window.GetY() + Window.GetHeight() / 2;
 
-logo.image = Image("logo.png");
-logo.sprite = Sprite(logo.image);
-logo.sprite.SetPosition(cx - logo.image.GetWidth() / 2, cy - logo.image.GetHeight() / 2 - 60, 10);
+NUM_FRAMES = 9;
+TICKS_PER_FRAME = 7;   # ~140 ms por quadro (Plymouth atualiza ~50x por segundo)
 
-word.image = Image("wordmark.png");
-word.sprite = Sprite(word.image);
-word.sprite.SetPosition(cx - word.image.GetWidth() / 2, cy + logo.image.GetHeight() / 2 - 20, 10);
+i = 0;
+while (i < NUM_FRAMES) {
+    frames[i] = Image("frame-" + i + ".png");
+    i++;
+}
 
-track.image = Image("track.png");
-track.sprite = Sprite(track.image);
-track.x = cx - track.image.GetWidth() / 2;
-track.y = cy + logo.image.GetHeight() / 2 + 50;
-track.sprite.SetPosition(track.x, track.y, 10);
-
-bar.image = Image("bar.png");
-bar.sprite = Sprite(bar.image);
-bar.sprite.SetPosition(track.x, track.y, 11);
+anim.sprite = Sprite(frames[0]);
+anim.x = cx - frames[0].GetWidth() / 2;
+anim.y = cy - frames[0].GetHeight() / 2;
+anim.sprite.SetPosition(anim.x, anim.y, 10);
 
 tick = 0;
-
 fun refresh_callback () {
     tick++;
-    logo.sprite.SetOpacity(0.8 + 0.2 * Math.Sin(tick / 18));
-    pos = (Math.Sin(tick / 22) + 1) / 2;
-    bar.sprite.SetX(track.x + pos * (track.image.GetWidth() - bar.image.GetWidth()));
+    f = Math.Int(tick / TICKS_PER_FRAME) % NUM_FRAMES;
+    anim.sprite.SetImage(frames[f]);
 }
 Plymouth.SetRefreshFunction(refresh_callback);
 
 # ---- Senha (caso use criptografia de disco) ----
 prompt.sprite = Sprite();
 bullets.sprite = Sprite();
+base_y = anim.y + frames[0].GetHeight() + 10;
 
 fun display_password_callback (prompt_text, bullet_count) {
     prompt.image = Image.Text(prompt_text, 0.9, 0.92, 1);
     prompt.sprite.SetImage(prompt.image);
-    prompt.sprite.SetPosition(cx - prompt.image.GetWidth() / 2, track.y + 40, 20);
+    prompt.sprite.SetPosition(cx - prompt.image.GetWidth() / 2, base_y, 20);
     dots = "";
-    i = 0;
-    while (i < bullet_count) {
+    j = 0;
+    while (j < bullet_count) {
         dots = dots + "*";
-        i++;
+        j++;
     }
     bullets.image = Image.Text(dots + " ", 0, 0.9, 1);
     bullets.sprite.SetImage(bullets.image);
-    bullets.sprite.SetPosition(cx - bullets.image.GetWidth() / 2, track.y + 70, 20);
-    track.sprite.SetOpacity(0);
-    bar.sprite.SetOpacity(0);
+    bullets.sprite.SetPosition(cx - bullets.image.GetWidth() / 2, base_y + 30, 20);
+    prompt.sprite.SetOpacity(1);
+    bullets.sprite.SetOpacity(1);
 }
 Plymouth.SetDisplayPasswordFunction(display_password_callback);
 
 fun display_normal_callback () {
     prompt.sprite.SetOpacity(0);
     bullets.sprite.SetOpacity(0);
-    track.sprite.SetOpacity(1);
-    bar.sprite.SetOpacity(1);
 }
 Plymouth.SetDisplayNormalFunction(display_normal_callback);
 

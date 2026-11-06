@@ -28,8 +28,8 @@ Tambem funciona direto: `gameleo-remoto sunshine`, `gameleo-remoto tailscale`, `
 
 O GameLeoBeStation tem duas animacoes proprias:
 
-- **Boot (Plymouth)**: logo hexagonal pulsando com barra de progresso, enquanto o sistema liga. Arquivos em `system_files/usr/share/plymouth/themes/gameleobestation/`.
-- **Abertura do Steam**: video de 6 segundos com o logo sendo desenhado, toca toda vez que o Gaming Mode abre. Arquivo em `system_files/usr/share/gameleobestation/deck_startup.webm`. Ele e ativado a partir do segundo boot (depois que o Steam terminar a primeira configuracao). Se nao aparecer, escolha em Configuracoes > Personalizacao > Video de inicializacao.
+- **Boot (Plymouth)**: animacao GameLeoBeStation (9 quadros, a partir do GIF original), enquanto o sistema liga. Arquivos `frame-0.png` a `frame-8.png` em `system_files/usr/share/plymouth/themes/gameleobestation/`.
+- **Abertura do Steam**: a mesma animacao em video (cerca de 3,5 segundos), toca toda vez que o Gaming Mode abre. Arquivo em `system_files/usr/share/gameleobestation/deck_startup.webm`. Ele e ativado a partir do segundo boot (depois que o Steam terminar a primeira configuracao). Se nao aparecer, escolha em Configuracoes > Personalizacao > Video de inicializacao.
 
 Para trocar o logo, substitua os PNGs e o .webm por versoes suas com o mesmo nome. Os scripts em `branding/` geram tudo de novo (precisa de Python com Pillow e ffmpeg).
 
@@ -37,7 +37,7 @@ Para trocar o logo, substitua os PNGs e o .webm por versoes suas com o mesmo nom
 
 1. Crie uma conta no GitHub (se nao tiver).
 2. Crie um repositorio novo chamado exatamente `gameleobestation` e envie todos estes arquivos para ele (pode arrastar a pasta em "Add file > Upload files"; a pasta `.github` precisa ir junto).
-3. Troque `somdesp` pelo seu usuario do GitHub (minusculas) em dois arquivos: `image-template.env` e `disk_config/iso.toml`.
+3. Troque `seu-usuario` pelo seu usuario do GitHub (minusculas) em dois arquivos: `image-template.env` e `disk_config/iso.toml`.
 4. Va na aba **Actions** e clique para ativar os workflows.
 5. Rode **Build container image** (Actions > Build container image > Run workflow). Leva uns 20 a 40 minutos.
 6. Deixe a imagem publica: no seu perfil do GitHub, aba **Packages** > `gameleobestation` > Package settings > Change visibility > Public. Sem isso a instalacao e as atualizacoes falham.
