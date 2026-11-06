@@ -34,3 +34,15 @@ chmod +x /usr/bin/gameleo-remoto
 # ---- Servico que instala os launchers de jogos no primeiro boot ----
 chmod +x /usr/libexec/gameleo-firstboot-apps.sh
 systemctl enable gameleo-firstboot-apps.service
+
+# ---- Repositorios do Fedora para o gerador de ISO ----
+# A partir do Fedora 45 os arquivos .repo ficam em /usr/share/dnf5/repos.d,
+# mas o gerador de ISO (bootc-image-builder) so le /etc/yum.repos.d.
+# Sem isso a ISO falha com "missing packages: coreutils, glibc, systemd...".
+if [ -d /usr/share/dnf5/repos.d ]; then
+    for f in /usr/share/dnf5/repos.d/fedora*.repo; do
+        if [ -e "$f" ] && [ ! -e "/etc/yum.repos.d/$(basename "$f")" ]; then
+            cp "$f" /etc/yum.repos.d/
+        fi
+    done
+fi
