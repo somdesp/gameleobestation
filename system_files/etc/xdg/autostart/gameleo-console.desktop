@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=GameLeoBeStation
+Comment=Abre o Heronite em modo console ao entrar no sistema
+Exec=gameleo-console
+Icon=input-gaming
+X-KDE-autostart-phase=2
+X-GNOME-Autostart-enabled=true

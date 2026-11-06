@@ -3,9 +3,9 @@ FROM scratch AS ctx
 COPY build_files /
 COPY system_files /system_files
 
-# Imagem base: Bazzite "deck" = inicia direto no Steam Gaming Mode (modo console).
-# Funciona em PCs com GPU AMD como a RX 9060 XT, nao so no Steam Deck.
-FROM ghcr.io/ublue-os/bazzite-deck:stable
+# Imagem base: Bazzite desktop (KDE) para GPU AMD/Intel. A tela principal e o Heronite.
+# Compativel com a RX 9060 XT.
+FROM ghcr.io/ublue-os/bazzite:stable
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:testing
 # FROM ghcr.io/ublue-os/aurora:stable

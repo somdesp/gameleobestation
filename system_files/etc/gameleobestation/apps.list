@@ -1,14 +1,12 @@
 # Apps (Flatpak) instalados automaticamente no primeiro boot.
 # Um ID por linha. Linhas com # sao ignoradas.
+# O Heronite (ja incluido no sistema) cuida de Steam, Epic, GOG, Amazon,
+# Battle.net, EA, Ubisoft, Rockstar e emuladores.
 
-# Epic Games, GOG e Amazon Games
-com.heroicgameslauncher.hgl
-# Battle.net, EA App, Ubisoft, itch.io e instaladores avulsos
-net.lutris.Lutris
-# Importa automaticamente os jogos da Epic, GOG, Amazon, itch etc. para dentro do Steam
-io.github.philipk.boilr
-# Gerencia versoes do Proton (Proton-GE etc.)
-com.vysp3r.ProtonPlus
+# Backup automatico dos saves depois de cada partida (usado pelo Heronite)
+com.github.mtkennerly.ludusavi
 
-# Emuladores de consoles antigos (tire o # para ativar)
+# Opcionais (tire o # para ativar)
+# com.heroicgameslauncher.hgl
+# net.lutris.Lutris
 # net.retrodeck.retrodeck

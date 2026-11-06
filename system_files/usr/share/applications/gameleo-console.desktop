@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Modo Console (Heronite)
+Comment=Volta para a tela de jogos da GameLeoBeStation
+Exec=gameleo-console
+Icon=input-gaming
+Categories=Game;

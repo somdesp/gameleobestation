@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+# Abre o Heronite em modo console, tela cheia (tela principal da GameLeoBeStation).
+export HERONITE_NO_UPDATE_CHECK=1
+exec heronite-rs --console --fullscreen "$@"
